@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #007BFF;
+      border: none;
+      color: white;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Sign Up</h2>
+  <form id="signupForm" novalidate>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" />
+    <div class="error" id="nameError"></div>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" />
+    <div class="error" id="emailError"></div>
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" />
+    <div class="error" id="phoneError"></div>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" />
+    <div class="error" id="passwordError"></div>
+
+    <button type="submit">Create Account</button>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('signupForm');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Clear previous errors
+    document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+    // Get form values
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value;
+
+    let isValid = true;
+
+    // Validate name
+    if (name === '') {
+      document.getElementById('nameError').textContent = 'Name is required.';
+      isValid = false;
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email === '') {
+      document.getElementById('emailError').textContent = 'Email is required.';
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      document.getElementById('emailError').textContent = 'Invalid email format.';
+      isValid = false;
+    }
+
+    // Validate phone
+    const phoneRegex = /^[0-9]{10}$/;
+    if (phone === '') {
+      document.getElementById('phoneError').textContent = 'Phone number is required.';
+      isValid = false;
+    } else if (!phoneRegex.test(phone)) {
+      document.getElementById('phoneError').textContent = 'Enter a 10-digit number.';
+      isValid = false;
+    }
+
+    // Validate password
+    if (password.length < 6) {
+      document.getElementById('passwordError').textContent = 'Password must be at least 6 characters.';
+      isValid = false;
+    }
+
+    if (isValid) {
+      alert('Form submitted successfully!');
+      form.reset();
+    }
+  });
+</script>
+
+</body>
+</html>
